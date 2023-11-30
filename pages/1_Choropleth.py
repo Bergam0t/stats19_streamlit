@@ -1,15 +1,8 @@
 import streamlit as st
-# Importing libraries
 import pandas as pd
 import numpy as np
 import geopandas as gpd
 import gc
-
-# import folium
-# from folium.plugins import FastMarkerCluster
-# from streamlit_folium import st_folium
-
-# import streamlit as st
 from streamlit_keplergl import keplergl_static
 from keplergl import KeplerGl
 
@@ -21,13 +14,14 @@ add_logo()
 
 gc.collect()
 
-# import pickle 
-
 map_2 = KeplerGl()
-# with open('data/msoa_casualties_5yr_quantile.geojson', 'r') as f:
-#     geojson = f.read()
 
-gj = gpd.read_file('data/msoa_casualties_5yr_quantile.geojson')
+@st.cache_data
+def load_data():
+    df = gpd.read_file('data/msoa_casualties_5yr_quantile.geojson')[["geometry", "casualty_counts_5_years_n", "collision_counts_5_years_n"]]
+    return df
+
+gj = load_data()
 
 config = {
     'version': 'v1',
@@ -41,7 +35,6 @@ config = {
 }
 
 map_2.config = config
-
 
 map_2.add_data(data=gj, name='geojson')
 

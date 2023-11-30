@@ -1,25 +1,12 @@
 import streamlit as st
-# Importing libraries
 import pandas as pd
 import numpy as np
 import geopandas as gpd
 import gc
-# import folium
-# from folium.plugins import FastMarkerCluster
-# from streamlit_folium import st_folium
-
-# import streamlit as st
 from streamlit_keplergl import keplergl_static
 from keplergl import KeplerGl
 from datetime import datetime
-# import pickle
-
 from helper_functions import add_logo
-
-
-
-# m = folium.Map(location=[50.435, -5.09426], #50.26656, -5.09426
-#                zoom_start=9.4)
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
@@ -36,32 +23,6 @@ stats19_collision = load_data()
 
 stats19_collision = stats19_collision[(stats19_collision["latitude"].notnull())&
                                       (stats19_collision["longitude"].notnull())]
-
-
-
-# m.add_child(FastMarkerCluster(stats19_collision[['latitude', 'longitude']].values.tolist()))
-
-# markers = [[location_info[0], location_info[1]]
-#  for location_info 
-#  in stats19_collision[['latitude', 'longitude']].values.tolist()]
-
-# [folium.Marker(i).add_to(m) for i in markers] 
-# for index, location_info in stats19_collision[(stats19_collision["latitude"].notnull())&
-#                                                (stats19_collision["longitude"].notnull())].iterrows():
-#     folium.Marker([location_info["latitude"], location_info["longitude"]]).add_to(m)
-
-# for i in markers:
-#     folium.Marker(i).add_to(m)
-
-
-# stats19_collision[(stats19_collision["latitude"].notnull())&(stats19_collision["longitude"].notnull())]
-
-
-# map_data = st_folium(m, key="fig1", width=700, height=700)
-
-# cols_to_stringify = stats19_collision.drop(columns=["accident_index","accident_reference", "longitude", "latitude", "lsoa_of_accident_location"]).columns.tolist()
-
-# stats19_collision[cols_to_stringify] = stats19_collision[cols_to_stringify].astype(str)
 
 colour_points_by = st.radio(
     label="Choose a value to colour the points by",
@@ -93,14 +54,13 @@ stats19_collision = stats19_collision[
 #                               colour_points_by]]
 
 filtered = stats19_collision.drop(columns=["accident_index","accident_reference", "lsoa_of_accident_location", "date"])
-# filtered = filtered.astype(str) 
 
+del stats19_collision
+gc.collect()
 
 map_1 = KeplerGl()
 map_1.add_data(data=filtered,
                name="collisions")
-
-map_1.layout
 
 config = {
     'version': 'v1',
