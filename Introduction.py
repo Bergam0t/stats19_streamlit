@@ -1,7 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-import geopandas as gpd
 import gc
 from streamlit_keplergl import keplergl_static
 from keplergl import KeplerGl
@@ -12,6 +10,8 @@ st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 add_logo()
 
+if 'map_kepler' in globals():
+    del map_kepler
 gc.collect()
 
 @st.cache_data
@@ -55,11 +55,8 @@ stats19_collision = stats19_collision[
 
 filtered = stats19_collision.drop(columns=["accident_index","accident_reference", "lsoa_of_accident_location", "date"])
 
-del stats19_collision
-gc.collect()
-
-map_1 = KeplerGl()
-map_1.add_data(data=filtered,
+map_kepler = KeplerGl()
+map_kepler.add_data(data=filtered,
                name="collisions")
 
 config = {
@@ -73,9 +70,9 @@ config = {
     }
 }
 
-map_1.config = config
+map_kepler.config = config
 
-keplergl_static(map_1, height=800)
+keplergl_static(map_kepler, height=800)
 
 del filtered
 gc.collect()

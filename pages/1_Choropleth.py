@@ -1,20 +1,19 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
 import geopandas as gpd
 import gc
 from streamlit_keplergl import keplergl_static
 from keplergl import KeplerGl
-
 from helper_functions import add_logo
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 add_logo()
 
+if 'map_kepler' in globals():
+    del map_kepler
 gc.collect()
 
-map_2 = KeplerGl()
+map_kepler = KeplerGl()
 
 @st.cache_data
 def load_data():
@@ -34,14 +33,11 @@ config = {
     }
 }
 
-map_2.config = config
+map_kepler.config = config
 
-map_2.add_data(data=gj, name='geojson')
+map_kepler.add_data(data=gj, name='geojson')
 
-del gj
-gc.collect()
-
-keplergl_static(map_2, height=800)
+keplergl_static(map_kepler, height=800)
 
 st.markdown(
     """
