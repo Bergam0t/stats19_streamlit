@@ -1,9 +1,9 @@
+import gc
+from datetime import datetime
 import streamlit as st
 import pandas as pd
-import gc
 from streamlit_keplergl import keplergl_static
 from keplergl import KeplerGl
-from datetime import datetime
 from helper_functions import add_logo
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
@@ -55,8 +55,6 @@ filtered = stats19_collision[[colour_points_by,
                               'latitude'
                              ]]
 
-# filtered = stats19_collision.drop(columns=["accident_index","accident_reference", "lsoa_of_accident_location", "date"])
-
 select_display_method = st.radio(
     "Select display type", 
     ["point", "hexagon", "heatmap"], 
@@ -66,57 +64,9 @@ select_display_method = st.radio(
 map_kepler = KeplerGl()
 map_kepler.add_data(data=filtered,
                name="collisions")
-
-               
+      
 del filtered
 gc.collect()
-#  'mapState': {
-#             'latitude': 55.435,
-#             'longitude': -2.09426,
-#             'zoom': 4.75
-#         },
-# config = {
-#     "version": "v1",
-#     "config": {
-#         "layers": [
-#             {
-#             "id": "037kie",
-#            "type": "point",
-#            "config": {
-#             "dataId": "collisions",
-#             "label": "TEST",
-#            },
-#            "visualChannels": {
-#             "colorField": {
-#               "name": "police_force",
-#               "type": "string"
-#             },
-#             "colorScale": "ordinal",
-#             # "strokeColorField": null,
-#             "strokeColorScale": "quantile",
-#             # "sizeField": null,
-#             "sizeScale": "linear"
-#           }
-#     }],
-#        'mapState': {
-#             'latitude': 55.435,
-#             'longitude': -2.09426,
-#             'zoom': 4.75
-#         }
-#     }
-# }
-
-# config = {
-#     "version": "v1",
-#     "config": {
-
-#        'mapState': {
-#             'latitude': 55.435,
-#             'longitude': -2.09426,
-#             'zoom': 4.75
-#         }
-#     }
-# }
 
 config = {'version': 'v1',
  'config': {'visState': {'filters': [],

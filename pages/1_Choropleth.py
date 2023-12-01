@@ -1,10 +1,9 @@
+import gc
 import streamlit as st
 import geopandas as gpd
-import gc
 from streamlit_keplergl import keplergl_static
 from keplergl import KeplerGl
 from helper_functions import add_logo
-# from pyogrio import read_dataframe
 
 # Remove cache objects after 30 minutes
 @st.cache(ttl=0.5*3600)
@@ -15,19 +14,10 @@ st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 add_logo()
 
-if 'map_kepler' in globals():
-    del map_kepler
-gc.collect()
-
 @st.cache_data
 def load_data(path):
     df = gpd.read_file(path)[["geometry", "casualty_counts_5_years_n", "collision_counts_5_years_n"]]
     return df
-
-# @st.cache_data
-# def load_data():
-#     df = read_dataframe('data/msoa_casualties_5yr_quantile.geojson')[["geometry", "casualty_counts_5_years_n", "collision_counts_5_years_n"]]
-#     return df
 
 colour_by = st.radio("Colour areas by which count?", 
                      ["casualty_counts_5_years_n", 
@@ -47,20 +37,7 @@ gj_filtered = gj[
     (gj[colour_by] <= value_filter[1])
     ]
 
-
 map_kepler = KeplerGl()
-# config = {
-#     'version': 'v1',
-#     'config': {
-#         'mapState': {
-#             'latitude': 55.435,
-#             'longitude': -2.09426,
-#             'zoom': 4.75
-#         }
-#     }
-# }
-
-
 
 config = {'version': 'v1',
  'config': {'visState': {'filters': [],
