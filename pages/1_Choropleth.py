@@ -9,7 +9,7 @@ st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 add_logo()
 
-@st.cache_data(ttl=0.5*3600)
+@st.cache_data(ttl=0.5*3600, max_entries=10)
 def load_data(path):
     df = gpd.read_file(path)[["geometry", "casualty_counts_5_years_n", "collision_counts_5_years_n"]]
     return df
