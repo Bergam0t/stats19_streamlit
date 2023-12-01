@@ -10,16 +10,17 @@ st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 add_logo()
 
-# if 'map_kepler' in globals():
-#     del map_kepler
-# gc.collect()
+# Remove cache objects after 30 minutes
+@st.cache(ttl=0.5*3600)
+def api_request(query):
+    return api.run(query)
 
 @st.cache_data
-def load_data():
-    df = pd.read_csv("data/stats19_collision_2022_minimal.csv")
+def load_data(path):
+    df = pd.read_csv(path)
     return df
 
-stats19_collision = load_data()
+stats19_collision = load_data("data/stats19_collision_2022_minimal.csv")
 
 stats19_collision = stats19_collision[(stats19_collision["latitude"].notnull())&
                                       (stats19_collision["longitude"].notnull())]
@@ -27,7 +28,7 @@ stats19_collision = stats19_collision[(stats19_collision["latitude"].notnull())&
 colour_points_by = st.radio(
     label="Choose a value to colour the points by",
     options=stats19_collision.drop(columns=["accident_index","accident_reference", "longitude", "latitude", "lsoa_of_accident_location", "time", "date"]).columns.tolist(),
-    horizontal=True
+    horizontal=True, format_func = lambda x: x.replace("_", " ").title()
 )
 
 filter_points_by = st.multiselect(label="Filter", 
@@ -56,9 +57,19 @@ filtered = stats19_collision[[colour_points_by,
 
 # filtered = stats19_collision.drop(columns=["accident_index","accident_reference", "lsoa_of_accident_location", "date"])
 
+select_display_method = st.radio(
+    "Select display type", 
+    ["point", "hexagon", "heatmap"], 
+    format_func = lambda x: x.title(),     
+    horizontal=True)
+
 map_kepler = KeplerGl()
 map_kepler.add_data(data=filtered,
                name="collisions")
+
+               
+del filtered
+gc.collect()
 #  'mapState': {
 #             'latitude': 55.435,
 #             'longitude': -2.09426,
@@ -110,7 +121,7 @@ map_kepler.add_data(data=filtered,
 config = {'version': 'v1',
  'config': {'visState': {'filters': [],
    'layers': [{'id': 's5bh44p',
-     'type': 'point',
+     'type': f'{select_display_method}',
      'config': {'dataId': 'collisions',
       'label': 'Point',
       'color': [18, 147, 154],
@@ -170,10 +181,13 @@ config = {'version': 'v1',
    'animationConfig': {'currentTime': None, 'speed': 1}},
   'mapState': {'bearing': 0,
    'dragRotate': False,
-   'latitude': 54.2017205,
-   'longitude': -1.9605770000000002,
+  #  'latitude': 54.2017205,
+  #  'longitude': -1.9605770000000002,
    'pitch': 0,
-   'zoom': 5,
+  #  'zoom': 5,
+      'latitude': 55.435,
+    'longitude': -2.09426,
+    'zoom': 4.75,
    'isSplit': False},
   'mapStyle': {'styleType': 'dark',
    'topLayerGroups': {},
@@ -191,13 +205,11 @@ config = {'version': 'v1',
 
 map_kepler.config = config
 
-
-
 keplergl_static(map_kepler, height=800)
 
 st.download_button('Download config', str(map_kepler.config))
 
-del filtered
+del map_kepler
 gc.collect()
 
 st.markdown(
