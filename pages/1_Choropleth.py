@@ -5,16 +5,11 @@ from streamlit_keplergl import keplergl_static
 from keplergl import KeplerGl
 from helper_functions import add_logo
 
-# Remove cache objects after 30 minutes
-@st.cache(ttl=0.5*3600)
-def api_request(query):
-    return api.run(query)
-
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 add_logo()
 
-@st.cache_data
+@st.cache_data(ttl=0.5*3600)
 def load_data(path):
     df = gpd.read_file(path)[["geometry", "casualty_counts_5_years_n", "collision_counts_5_years_n"]]
     return df

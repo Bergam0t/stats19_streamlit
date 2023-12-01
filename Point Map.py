@@ -10,12 +10,7 @@ st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 add_logo()
 
-# Remove cache objects after 30 minutes
-@st.cache(ttl=0.5*3600)
-def api_request(query):
-    return api.run(query)
-
-@st.cache_data
+@st.cache_data(ttl=0.5*3600)
 def load_data(path):
     df = pd.read_csv(path)
     return df
@@ -25,11 +20,16 @@ stats19_collision = load_data("data/stats19_collision_2022_minimal.csv")
 stats19_collision = stats19_collision[(stats19_collision["latitude"].notnull())&
                                       (stats19_collision["longitude"].notnull())]
 
+options = stats19_collision.drop(columns=["accident_index","accident_reference", "longitude", "latitude", "lsoa_of_accident_location", "time", "date"]).columns.tolist()
+
 colour_points_by = st.radio(
     label="Choose a value to colour the points by",
-    options=stats19_collision.drop(columns=["accident_index","accident_reference", "longitude", "latitude", "lsoa_of_accident_location", "time", "date"]).columns.tolist(),
+    options=["accident_severity"].append(options.remove("accident_severity")),
     horizontal=True, format_func = lambda x: x.replace("_", " ").title()
 )
+
+del options
+gc.collect()
 
 filter_points_by = st.multiselect(label="Filter", 
                                   options=stats19_collision[colour_points_by].drop_duplicates().sort_values().to_list(),
