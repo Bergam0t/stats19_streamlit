@@ -128,7 +128,27 @@ config = {'version': 'v1',
    'threeDBuildingColor': [9.665468314072013,
     17.18305478057247,
     31.1442867897876],
-   'mapStyles': {}}}}
+   
+      "mapStyles": {
+        # "vw22uhl": {
+        #   "accessToken": "pk.eyJ1IjoidWJlcmRhdGEiLCJhIjoidGllX1gxUSJ9.gElUooDF7u51guCQREmAhg",
+        #   "custom": true,
+        #   "icon": "https://api.mapbox.com/styles/v1/uberdata/ck14353fm0vml1dqttzcnzgm7/static/-122.3391,37.7922,9,0,0/400x300?access_token=pk.eyJ1IjoidWJlcmRhdGEiLCJhIjoidGllX1gxUSJ9.gElUooDF7u51guCQREmAhg&logo=false&attribution=false",
+        #   "id": "vw22uhl",
+        #   "label": "Kepler.gl Flight Map",
+        #   "url": "mapbox://styles/uberdata/ck14353fm0vml1dqttzcnzgm7"
+        # },
+        "rjoz7wd": {
+          "accessToken": None,
+          "custom": True,
+          "icon": "",
+          "id": "rjoz7wd",
+          "label": "Street",
+          "url": "mapbox://styles/mapbox/streets-v12"
+        }
+   
+   }
+   }}}
 
 map_kepler.config = config
 
