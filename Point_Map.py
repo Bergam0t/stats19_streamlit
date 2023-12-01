@@ -23,7 +23,7 @@ stats19_collision = stats19_collision[(stats19_collision["latitude"].notnull())&
 options = stats19_collision.drop(
   columns=["accident_index","accident_reference", "longitude", 
            "latitude", "lsoa_of_accident_location", "time", "date"]).columns.tolist()
-options.remove()
+options.remove("accident_severity")
 options.insert(0, "accident_severity")
 
 colour_points_by = st.radio(
