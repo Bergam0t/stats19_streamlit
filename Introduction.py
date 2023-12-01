@@ -10,9 +10,9 @@ st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 add_logo()
 
-if 'map_kepler' in globals():
-    del map_kepler
-gc.collect()
+# if 'map_kepler' in globals():
+#     del map_kepler
+# gc.collect()
 
 @st.cache_data
 def load_data():
@@ -49,30 +49,153 @@ stats19_collision = stats19_collision[
     (stats19_collision["date"] <= date_filter[1])
     ]
 
-# filtered = stats19_collision[['longitude',
-#                               'latitude',
-#                               colour_points_by]]
+filtered = stats19_collision[[colour_points_by,
+                              'longitude',
+                              'latitude'
+                             ]]
 
-filtered = stats19_collision.drop(columns=["accident_index","accident_reference", "lsoa_of_accident_location", "date"])
+# filtered = stats19_collision.drop(columns=["accident_index","accident_reference", "lsoa_of_accident_location", "date"])
 
 map_kepler = KeplerGl()
 map_kepler.add_data(data=filtered,
                name="collisions")
+#  'mapState': {
+#             'latitude': 55.435,
+#             'longitude': -2.09426,
+#             'zoom': 4.75
+#         },
+# config = {
+#     "version": "v1",
+#     "config": {
+#         "layers": [
+#             {
+#             "id": "037kie",
+#            "type": "point",
+#            "config": {
+#             "dataId": "collisions",
+#             "label": "TEST",
+#            },
+#            "visualChannels": {
+#             "colorField": {
+#               "name": "police_force",
+#               "type": "string"
+#             },
+#             "colorScale": "ordinal",
+#             # "strokeColorField": null,
+#             "strokeColorScale": "quantile",
+#             # "sizeField": null,
+#             "sizeScale": "linear"
+#           }
+#     }],
+#        'mapState': {
+#             'latitude': 55.435,
+#             'longitude': -2.09426,
+#             'zoom': 4.75
+#         }
+#     }
+# }
 
-config = {
-    'version': 'v1',
-    'config': {
-        'mapState': {
-            'latitude': 55.435,
-            'longitude': -2.09426,
-            'zoom': 4.75
-        }
-    }
-}
+# config = {
+#     "version": "v1",
+#     "config": {
+
+#        'mapState': {
+#             'latitude': 55.435,
+#             'longitude': -2.09426,
+#             'zoom': 4.75
+#         }
+#     }
+# }
+
+config = {'version': 'v1',
+ 'config': {'visState': {'filters': [],
+   'layers': [{'id': 's5bh44p',
+     'type': 'point',
+     'config': {'dataId': 'collisions',
+      'label': 'Point',
+      'color': [18, 147, 154],
+      'highlightColor': [252, 242, 26, 255],
+      'columns': {'lat': 'latitude', 'lng': 'longitude', 'altitude': None},
+      'isVisible': True,
+      'visConfig': {'radius': 10,
+       'fixedRadius': False,
+       'opacity': 0.8,
+       'outline': False,
+       'thickness': 2,
+       'strokeColor': None,
+       'colorRange': {'name': 'Global Warming',
+        'type': 'sequential',
+        'category': 'Uber',
+        'colors': ['#5A1846',
+         '#900C3F',
+         '#C70039',
+         '#E3611C',
+         '#F1920E',
+         '#FFC300']},
+       'strokeColorRange': {'name': 'Global Warming',
+        'type': 'sequential',
+        'category': 'Uber',
+        'colors': ['#5A1846',
+         '#900C3F',
+         '#C70039',
+         '#E3611C',
+         '#F1920E',
+         '#FFC300']},
+       'radiusRange': [0, 50],
+       'filled': True},
+      'hidden': False,
+      'textLabel': [{'field': None,
+        'color': [255, 255, 255],
+        'size': 18,
+        'offset': [0, 0],
+        'anchor': 'start',
+        'alignment': 'center'}]},
+     'visualChannels': {'colorField': {'name': f'{colour_points_by}',
+       'type': 'string'},
+      'colorScale': 'ordinal',
+      'strokeColorField': None,
+      'strokeColorScale': 'quantile',
+      'sizeField': None,
+      'sizeScale': 'linear'}}],
+   'interactionConfig': {'tooltip': {'fieldsToShow': {'collisions': [{'name': 'accident_severity',
+        'format': None}]},
+     'compareMode': False,
+     'compareType': 'absolute',
+     'enabled': True},
+    'brush': {'size': 0.5, 'enabled': False},
+    'geocoder': {'enabled': False},
+    'coordinate': {'enabled': False}},
+   'layerBlending': 'normal',
+   'splitMaps': [],
+   'animationConfig': {'currentTime': None, 'speed': 1}},
+  'mapState': {'bearing': 0,
+   'dragRotate': False,
+   'latitude': 54.2017205,
+   'longitude': -1.9605770000000002,
+   'pitch': 0,
+   'zoom': 5,
+   'isSplit': False},
+  'mapStyle': {'styleType': 'dark',
+   'topLayerGroups': {},
+   'visibleLayerGroups': {'label': True,
+    'road': True,
+    'border': False,
+    'building': True,
+    'water': True,
+    'land': True,
+    '3d building': False},
+   'threeDBuildingColor': [9.665468314072013,
+    17.18305478057247,
+    31.1442867897876],
+   'mapStyles': {}}}}
 
 map_kepler.config = config
 
+
+
 keplergl_static(map_kepler, height=800)
+
+st.download_button('Download config', str(map_kepler.config))
 
 del filtered
 gc.collect()
