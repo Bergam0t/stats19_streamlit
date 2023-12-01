@@ -2,4 +2,4 @@ pandas
 numpy
 geopandas
 keplergl
-streamlit-keplergl
+streamlit_keplergl
