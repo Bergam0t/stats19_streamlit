@@ -1,4 +1,5 @@
+leafmap
 pandas
 numpy
 geopandas
-leafmap
+keplergl
