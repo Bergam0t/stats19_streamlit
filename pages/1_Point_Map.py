@@ -2,8 +2,10 @@ import gc
 from datetime import datetime
 import streamlit as st
 import pandas as pd
-from streamlit_keplergl import keplergl_static
-from keplergl import KeplerGl
+# from streamlit_keplergl import keplergl_static
+import leafmap.kepler as leafmap
+import geopandas as gpd
+
 from helper_functions import add_logo
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
@@ -66,12 +68,9 @@ select_display_method = st.radio(
     format_func = lambda x: x.title(),     
     horizontal=True)
 
-map_kepler = KeplerGl()
-map_kepler.add_data(data=filtered,
-               name="collisions")
+map_kepler = leafmap.Map()
       
-del filtered
-gc.collect()
+
 
 config = {'version': 'v1',
  'config': {'visState': {'filters': [],
@@ -178,11 +177,15 @@ config = {'version': 'v1',
    }
    }}}
 
+map_kepler.add_data(filtered, name="collisions")
+
 map_kepler.config = config
 
-keplergl_static(map_kepler, height=800)
+del filtered
+gc.collect()
 
-st.download_button('Download config', str(map_kepler.config))
+# keplergl_static(map_kepler, height=800)
+map_kepler.to_streamlit()
 
 del map_kepler
 gc.collect()

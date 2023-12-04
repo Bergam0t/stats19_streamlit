@@ -1,9 +1,11 @@
 import gc
 import streamlit as st
 import geopandas as gpd
-from streamlit_keplergl import keplergl_static
-from keplergl import KeplerGl
+# from streamlit_keplergl import keplergl_static
+# from keplergl import KeplerGl
 from helper_functions import add_logo
+import leafmap.kepler as leafmap
+
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
@@ -32,7 +34,8 @@ gj_filtered = gj[
     (gj[colour_by] <= value_filter[1])
     ]
 
-map_kepler = KeplerGl()
+# map_kepler = KeplerGl()
+map_kepler = leafmap.Map()
 
 config = {'version': 'v1',
  'config': {'visState': {'filters': [],
@@ -156,7 +159,8 @@ map_kepler.add_data(data=gj_filtered, name='geojson')
 del gj_filtered
 gc.collect()
 
-keplergl_static(map_kepler, height=800)
+# keplergl_static(map_kepler, height=800)
+map_kepler.to_streamlit()
 
 del map_kepler
 gc.collect()

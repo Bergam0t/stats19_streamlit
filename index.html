@@ -19,13 +19,12 @@
     <script>
       stlite.mount(
   {
-    requirements: ["pandas", "numpy", "geopandas", "keplergl", "streamlit_keplergl"],
+    requirements: ["pandas", "numpy", "geopandas", "leafmap"],
     entrypoint: "Introduction.py",
     files: {
       "Introduction.py": `
       import streamlit as st
 from helper_functions import add_logo
-
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
