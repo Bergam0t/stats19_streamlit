@@ -69,156 +69,158 @@ stats19_collision = stats19_collision[
     (stats19_collision["date"] <= date_filter[1])
     ]
 
-filtered = stats19_collision[[colour_points_by,
-                              'longitude',
-                              'latitude'
-                             ]]
+if len(stats19_collision) > 0:
 
-if len(filtered) > 0:
-    
+    filtered = stats19_collision[[colour_points_by,
+                                  'longitude',
+                                  'latitude'
+                                ]]
 
-  select_display_method = st.radio(
-      "Select display type", 
-      ["point", "hexagon", "heatmap"], 
-      format_func = lambda x: x.title(),     
-      horizontal=True)
-
-  map_kepler = leafmap.Map()
+    if len(filtered) > 0:
         
 
+        select_display_method = st.radio(
+            "Select display type", 
+            ["point", "hexagon", "heatmap"], 
+            format_func = lambda x: x.title(),     
+            horizontal=True)
 
-  config = {'version': 'v1',
-  'config': {'visState': {'filters': [],
-    'layers': [{'id': 's5bh44p',
-      'type': f'{select_display_method}',
-      'config': {'dataId': 'collisions',
-        'label': 'Point',
-        'color': [18, 147, 154],
-        'highlightColor': [252, 242, 26, 255],
-        'columns': {'lat': 'latitude', 'lng': 'longitude', 'altitude': None},
-        'isVisible': True,
-        'visConfig': {'radius': 10,
-        'fixedRadius': False,
-        'opacity': 0.8,
-        'outline': False,
-        'thickness': 2,
-        'strokeColor': None,
-        'colorRange': {'name': 'Global Warming',
-          'type': 'sequential',
-          'category': 'Uber',
-          'colors': ['#5A1846',
-          '#900C3F',
-          '#C70039',
-          '#E3611C',
-          '#F1920E',
-          '#FFC300']},
-        'strokeColorRange': {'name': 'Global Warming',
-          'type': 'sequential',
-          'category': 'Uber',
-          'colors': ['#5A1846',
-          '#900C3F',
-          '#C70039',
-          '#E3611C',
-          '#F1920E',
-          '#FFC300']},
-        'radiusRange': [0, 50],
-        'filled': True},
-        'hidden': False,
-        'textLabel': [{'field': None,
-          'color': [255, 255, 255],
-          'size': 18,
-          'offset': [0, 0],
-          'anchor': 'start',
-          'alignment': 'center'}]},
-      'visualChannels': {'colorField': {'name': f'{colour_points_by}',
-        'type': 'string'},
-        'colorScale': 'ordinal',
-        'strokeColorField': None,
-        'strokeColorScale': 'quantile',
-        'sizeField': None,
-        'sizeScale': 'linear'}}],
-    'interactionConfig': {'tooltip': {'fieldsToShow': {'collisions': [{'name': 'accident_severity',
-          'format': None}]},
-      'compareMode': False,
-      'compareType': 'absolute',
-      'enabled': True},
-      'brush': {'size': 0.5, 'enabled': False},
-      'geocoder': {'enabled': False},
-      'coordinate': {'enabled': False}},
-    'layerBlending': 'normal',
-    'splitMaps': [],
-    'animationConfig': {'currentTime': None, 'speed': 1}},
-    'mapState': {'bearing': 0,
-    'dragRotate': False,
-    #  'latitude': 54.2017205,
-    #  'longitude': -1.9605770000000002,
-    'pitch': 0,
-    #  'zoom': 5,
-        'latitude': 55.435,
-      'longitude': -2.09426,
-      'zoom': 4.75,
-    'isSplit': False},
-    'mapStyle': {'styleType': 'rjoz7wd',
-    'topLayerGroups': {},
-    'visibleLayerGroups': {'label': True,
-      'road': True,
-      'border': False,
-      'building': True,
-      'water': True,
-      'land': True,
-      '3d building': False},
-    'threeDBuildingColor': [9.665468314072013,
-      17.18305478057247,
-      31.1442867897876],
-    
-        "mapStyles": {
-          # "vw22uhl": {
-          #   "accessToken": "pk.eyJ1IjoidWJlcmRhdGEiLCJhIjoidGllX1gxUSJ9.gElUooDF7u51guCQREmAhg",
-          #   "custom": true,
-          #   "icon": "https://api.mapbox.com/styles/v1/uberdata/ck14353fm0vml1dqttzcnzgm7/static/-122.3391,37.7922,9,0,0/400x300?access_token=pk.eyJ1IjoidWJlcmRhdGEiLCJhIjoidGllX1gxUSJ9.gElUooDF7u51guCQREmAhg&logo=false&attribution=false",
-          #   "id": "vw22uhl",
-          #   "label": "Kepler.gl Flight Map",
-          #   "url": "mapbox://styles/uberdata/ck14353fm0vml1dqttzcnzgm7"
-          # },
-          "rjoz7wd": {
-            "accessToken": None,
-            "custom": True,
-            "icon": "",
-            "id": "rjoz7wd",
-            "label": "Street",
-            "url": "mapbox://styles/mapbox/streets-v12"
+        map_kepler = leafmap.Map()
+              
+
+
+        config = {'version': 'v1',
+        'config': {'visState': {'filters': [],
+          'layers': [{'id': 's5bh44p',
+            'type': f'{select_display_method}',
+            'config': {'dataId': 'collisions',
+              'label': 'Point',
+              'color': [18, 147, 154],
+              'highlightColor': [252, 242, 26, 255],
+              'columns': {'lat': 'latitude', 'lng': 'longitude', 'altitude': None},
+              'isVisible': True,
+              'visConfig': {'radius': 10,
+              'fixedRadius': False,
+              'opacity': 0.8,
+              'outline': False,
+              'thickness': 2,
+              'strokeColor': None,
+              'colorRange': {'name': 'Global Warming',
+                'type': 'sequential',
+                'category': 'Uber',
+                'colors': ['#5A1846',
+                '#900C3F',
+                '#C70039',
+                '#E3611C',
+                '#F1920E',
+                '#FFC300']},
+              'strokeColorRange': {'name': 'Global Warming',
+                'type': 'sequential',
+                'category': 'Uber',
+                'colors': ['#5A1846',
+                '#900C3F',
+                '#C70039',
+                '#E3611C',
+                '#F1920E',
+                '#FFC300']},
+              'radiusRange': [0, 50],
+              'filled': True},
+              'hidden': False,
+              'textLabel': [{'field': None,
+                'color': [255, 255, 255],
+                'size': 18,
+                'offset': [0, 0],
+                'anchor': 'start',
+                'alignment': 'center'}]},
+            'visualChannels': {'colorField': {'name': f'{colour_points_by}',
+              'type': 'string'},
+              'colorScale': 'ordinal',
+              'strokeColorField': None,
+              'strokeColorScale': 'quantile',
+              'sizeField': None,
+              'sizeScale': 'linear'}}],
+          'interactionConfig': {'tooltip': {'fieldsToShow': {'collisions': [{'name': 'accident_severity',
+                'format': None}]},
+            'compareMode': False,
+            'compareType': 'absolute',
+            'enabled': True},
+            'brush': {'size': 0.5, 'enabled': False},
+            'geocoder': {'enabled': False},
+            'coordinate': {'enabled': False}},
+          'layerBlending': 'normal',
+          'splitMaps': [],
+          'animationConfig': {'currentTime': None, 'speed': 1}},
+          'mapState': {'bearing': 0,
+          'dragRotate': False,
+          #  'latitude': 54.2017205,
+          #  'longitude': -1.9605770000000002,
+          'pitch': 0,
+          #  'zoom': 5,
+              'latitude': 55.435,
+            'longitude': -2.09426,
+            'zoom': 4.75,
+          'isSplit': False},
+          'mapStyle': {'styleType': 'rjoz7wd',
+          'topLayerGroups': {},
+          'visibleLayerGroups': {'label': True,
+            'road': True,
+            'border': False,
+            'building': True,
+            'water': True,
+            'land': True,
+            '3d building': False},
+          'threeDBuildingColor': [9.665468314072013,
+            17.18305478057247,
+            31.1442867897876],
+          
+              "mapStyles": {
+                # "vw22uhl": {
+                #   "accessToken": "pk.eyJ1IjoidWJlcmRhdGEiLCJhIjoidGllX1gxUSJ9.gElUooDF7u51guCQREmAhg",
+                #   "custom": true,
+                #   "icon": "https://api.mapbox.com/styles/v1/uberdata/ck14353fm0vml1dqttzcnzgm7/static/-122.3391,37.7922,9,0,0/400x300?access_token=pk.eyJ1IjoidWJlcmRhdGEiLCJhIjoidGllX1gxUSJ9.gElUooDF7u51guCQREmAhg&logo=false&attribution=false",
+                #   "id": "vw22uhl",
+                #   "label": "Kepler.gl Flight Map",
+                #   "url": "mapbox://styles/uberdata/ck14353fm0vml1dqttzcnzgm7"
+                # },
+                "rjoz7wd": {
+                  "accessToken": None,
+                  "custom": True,
+                  "icon": "",
+                  "id": "rjoz7wd",
+                  "label": "Street",
+                  "url": "mapbox://styles/mapbox/streets-v12"
+                }
+          
           }
-    
-    }
-    }}}
+          }}}
 
-  map_kepler.add_data(filtered, name="collisions")
+        map_kepler.add_data(filtered, name="collisions")
 
-  map_kepler.config = config
+        map_kepler.config = config
 
-  del filtered
-  gc.collect()
+        del filtered
+        gc.collect()
 
-  with st.expander("Click here to get help for navigating the map"):
-      st.markdown(
-      """
-      Click and drag anywhere on the map to move the map around. 
+        with st.expander("Click here to get help for navigating the map"):
+            st.markdown(
+            """
+            Click and drag anywhere on the map to move the map around. 
 
-      Click the 'show legend' button - the third button down on the right hand side of the map - to view the legend. 
+            Click the 'show legend' button - the third button down on the right hand side of the map - to view the legend. 
 
-      Use the scroll wheel on your mouse to zoom in and out on the map, or double click on the map to zoom in. 
-      If you are on a laptop trackpad, with your mouse cursor somewhere on the map, put two fingers about a centimetre apart on the trackpad. Drag your fingers upwards or downwards on the trackpad to zoom. 
+            Use the scroll wheel on your mouse to zoom in and out on the map, or double click on the map to zoom in. 
+            If you are on a laptop trackpad, with your mouse cursor somewhere on the map, put two fingers about a centimetre apart on the trackpad. Drag your fingers upwards or downwards on the trackpad to zoom. 
 
-      Hover over a point to see details about it. 
-      """
+            Hover over a point to see details about it. 
+            """
 
-      )
+            )
 
-  # keplergl_static(map_kepler, height=800)
-  map_kepler.to_streamlit(height=800)
+        # keplergl_static(map_kepler, height=800)
+        map_kepler.to_streamlit(height=800)
 
-  del map_kepler
-  gc.collect()
+        del map_kepler
+        gc.collect()
 
 else:
     st.markdown("No data remaining after all filters applied. Either widen date range or add additional criteria back into the 'categories to include' selector.")
