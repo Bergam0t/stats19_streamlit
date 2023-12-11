@@ -1,8 +1,11 @@
 import streamlit as st
 from helper_functions import add_logo
+import gc
 
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
+
+gc.collect()
 
 add_logo()
 
@@ -28,3 +31,5 @@ st.markdown(
     Lovelace, Robin, Malcolm Morgan, Layik Hama, Mark Padgham, and M Padgham. 2019. “Stats19 A Package for Working with Open Road Crash Data.” Journal of Open Source Software 4 (33): 1181. https://doi.org/10.21105/joss.01181.
     """
 )
+
+gc.collect()

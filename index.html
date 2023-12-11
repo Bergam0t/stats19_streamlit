@@ -23,12 +23,15 @@
     entrypoint: "Introduction.py",
     files: {
       "Introduction.py": `
+      import gc
       import streamlit as st
 from helper_functions import add_logo
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 add_logo()
+
+gc.collect()
 
 st.header("Stats19 Data Explorer")
 

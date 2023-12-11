@@ -12,6 +12,8 @@ st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 add_logo()
 
+gc.collect()
+
 @st.cache_data(ttl=0.5*3600, max_entries=10)
 def load_data(path):
     df = pd.read_csv(path)
