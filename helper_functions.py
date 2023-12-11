@@ -58,7 +58,7 @@ def add_logo():
                 background-position: 40px 30px;
             }
             [data-testid="stSidebarNav"]::before {
-                content: "Stats19 Data Exploration";
+                content: "Stats19 Map";
                 padding-left: 20px;
                 margin-top: 50px;
                 font-size: 30px;
