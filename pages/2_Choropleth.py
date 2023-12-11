@@ -13,7 +13,13 @@ add_logo()
 
 center_running()
 
+# Import the stylesheet
+with open("style.css") as css:
+    st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
+
 gc.collect()
+
+st.title("Choropleth - Collisions and Casualties in the UK by MSOA: 2018 - 2022 inclusive")
 
 @st.cache_data(ttl=0.5*3600, max_entries=5)
 def load_data(path):

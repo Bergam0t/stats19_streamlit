@@ -14,6 +14,12 @@ add_logo()
 
 center_running()
 
+# Import the stylesheet
+with open("style.css") as css:
+    st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
+
+st.title("Point Map - Road Traffic Accidents in the UK in 2022")
+
 gc.collect()
 
 @st.cache_data(ttl=0.5*3600, max_entries=5)
