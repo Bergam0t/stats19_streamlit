@@ -3,13 +3,15 @@ import streamlit as st
 import geopandas as gpd
 # from streamlit_keplergl import keplergl_static
 # from keplergl import KeplerGl
-from helper_functions import add_logo
+from helper_functions import add_logo, center_running
 import leafmap.kepler as leafmap
 
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 add_logo()
+
+center_running()
 
 gc.collect()
 

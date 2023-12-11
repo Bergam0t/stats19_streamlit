@@ -6,11 +6,13 @@ import pandas as pd
 import leafmap.kepler as leafmap
 import geopandas as gpd
 
-from helper_functions import add_logo
+from helper_functions import add_logo, center_running
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 add_logo()
+
+center_running()
 
 gc.collect()
 
