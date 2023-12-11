@@ -13,7 +13,7 @@ add_logo()
 
 gc.collect()
 
-@st.cache_data(ttl=0.5*3600, max_entries=10)
+@st.cache_data(ttl=0.5*3600, max_entries=5)
 def load_data(path):
     df = gpd.read_file(path)[["geometry", "casualty_counts_5_years_n", "collision_counts_5_years_n"]]
     return df

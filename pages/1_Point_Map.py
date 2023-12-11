@@ -14,7 +14,7 @@ add_logo()
 
 gc.collect()
 
-@st.cache_data(ttl=0.5*3600, max_entries=10)
+@st.cache_data(ttl=0.5*3600, max_entries=5)
 def load_data(path):
     df = pd.read_csv(path)
     return df
