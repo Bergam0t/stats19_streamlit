@@ -189,7 +189,7 @@ del filtered
 gc.collect()
 
 # keplergl_static(map_kepler, height=800)
-map_kepler.to_streamlit()
+map_kepler.to_streamlit(height=800)
 
 del map_kepler
 gc.collect()
