@@ -50,7 +50,9 @@ gc.collect()
 
 filter_points_by = st.multiselect(label="Filter", 
                                   options=stats19_collision[colour_points_by].drop_duplicates().sort_values().to_list(),
-                                  default=stats19_collision[colour_points_by].drop_duplicates().sort_values().to_list())
+                                  default=stats19_collision[colour_points_by].drop_duplicates().sort_values().to_list(),
+                                  help="Click on the 'x' next to a label to remove those points from the map. \
+                                  To add a point type back in, Click on the 'v' icon at the far right of the filter box and choose the point type from the dropdown list that appears.")
 
 stats19_collision = stats19_collision[stats19_collision[colour_points_by].isin(filter_points_by)]
 
@@ -193,6 +195,21 @@ map_kepler.config = config
 
 del filtered
 gc.collect()
+
+with st.expander("Click here to get help for navigating the map"):
+    st.markdown(
+    """
+    Click and drag anywhere on the map to move the map around. 
+
+    Click the 'show legend' button - the third button down on the right hand side of the map - to view the legend. 
+
+    Use the scroll wheel on your mouse to zoom in and out on the map, or double click on the map to zoom in. 
+    If you are on a laptop trackpad, with your mouse cursor somewhere on the map, put two fingers about a centimetre apart on the trackpad. Drag your fingers upwards or downwards on the trackpad to zoom. 
+
+    Hover over a point to see details about it. 
+    """
+
+    )
 
 # keplergl_static(map_kepler, height=800)
 map_kepler.to_streamlit(height=800)
